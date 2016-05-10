@@ -10,7 +10,16 @@ class Calculator(QtWidgets.QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        for button in self.ui.numbers.buttons():
+            button.clicked.connect(self.add_digit)
+
+        self.number_string = '0'
         self.show()
+
+    def add_digit(self):
+        number = self.sender().objectName().split('_')[1]
+        self.ui.lcd.display(self.number_string)
 
 
 if __name__ == '__main__':
