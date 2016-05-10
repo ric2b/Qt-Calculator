@@ -59,14 +59,20 @@ class Calculator(QtWidgets.QMainWindow):
         if self.new_operation:
             self.B = float(self.number_string)
 
-        if self.operation == 'add':
-            self.A += self.B
-        if self.operation == 'subtract':
-            self.A -= self.B
-        if self.operation == 'multiply':
-            self.A *= self.B
-        if self.operation == 'divide':
-            self.A /= self.B
+        try:
+            if self.operation == 'add':
+                self.A += self.B
+            if self.operation == 'subtract':
+                self.A -= self.B
+            if self.operation == 'multiply':
+                self.A *= self.B
+            if self.operation == 'divide':
+                self.A /= self.B
+        except ArithmeticError:
+            error_dialog = QtWidgets.QMessageBox()
+            error_dialog.setText('Invalid operation')
+            error_dialog.exec_()
+            self.A = 0
 
         self.number_string = '0'
         self.ui.lcd.display(self.A)
