@@ -14,10 +14,16 @@ class Calculator(QtWidgets.QMainWindow):
         for button in self.ui.numbers.buttons():
             button.clicked.connect(self.add_digit)
 
+        for button in self.ui.operations.buttons():
+            button.clicked.connect(self.operation)
+
         self.ui.clear.clicked.connect(self.clear_lcd)
         self.ui.dot.clicked.connect(self.add_dot)
 
+        self.operation = None
+        self.new_operation = False
         self.number_string = '0'
+        self.A = 0
         self.show()
 
     def add_digit(self):
@@ -36,6 +42,13 @@ class Calculator(QtWidgets.QMainWindow):
         if '.' not in self.number_string:
             self.number_string += '.'
         print(self.number_string)
+
+    def operation(self):
+        self.operation = self.sender().objectName()
+        self.new_operation = True
+        self.A = float(self.number_string)
+        self.number_string = '0'
+        print(self.A, self.operation)
 
     def clear_lcd(self):
         self.number_string = '0'
